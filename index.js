@@ -7,7 +7,7 @@ dotenv.config({ quiet: true });
 const app = express();
 
 app.use(cors({
-  origin: "http://localhost:5173",  // allow your React app
+  origin: "*",  // allow your React app
   methods: ["GET", "POST", "OPTIONS"],
   allowedHeaders: ["Content-Type"],
 }));
