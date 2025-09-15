@@ -6,13 +6,14 @@ import cors from "cors";
 dotenv.config({ quiet: true });
 const app = express();
 
-app.use(express.json());
-
 app.use(cors({
-  origin: "*", // or replace * with your frontend domain
-  methods: ["GET", "POST"],
+  origin: "http://localhost:5173",  // allow your React app
+  methods: ["GET", "POST", "OPTIONS"],
   allowedHeaders: ["Content-Type"],
 }));
+
+app.use(express.json());
+app.options("*", cors()); 
 
 // Health check route
 app.get("/", (req, res) => {
