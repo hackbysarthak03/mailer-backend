@@ -7,7 +7,12 @@ dotenv.config({ quiet: true });
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+
+app.use(cors({
+  origin: "*", // or replace * with your frontend domain
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type"],
+}));
 
 // Health check route
 app.get("/", (req, res) => {
