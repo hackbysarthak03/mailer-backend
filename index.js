@@ -12,13 +12,16 @@ import promotionalBannerRoutes from "./routes/promotionalBannerRoutes.js";
 import getInTouchRoutes from "./routes/getInTouchRoutes.js";
 import addressRoutes from "./routes/addressRoutes.js";
 import cartRoutes from "./routes/cartRoutes.js";
+import blogRoutes from "./routes/blogRoutes.js";
+import cloudinaryImageUploadRoute from './routes/cloudinaryImageUploadRoute.js';
+import { v2 as cloudinary } from 'cloudinary';
+
 
 // -------------------------  Import Section ends here -------------------------
 
 dotenv.config({ quiet: true });
 const app = express();
 
-app.use(express.json());
 
 app.use(cors({
   origin: "*", // React app URL
@@ -26,12 +29,26 @@ app.use(cors({
   allowedHeaders: "*",
 }));
 
+app.use('/api/img-upload', cloudinaryImageUploadRoute);
+
+app.use(express.json());
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
 
 // -------------------------- Configuration Section ends here -------------------
 
 connectDB();
+
+// ---------------  ImageKit Configuration ---------------------------------------
+
+
+// Configure Cloudinary
+cloudinary.config({
+  cloud_name: "dx0toqzvu",
+  api_key: "265425677498664",
+  api_secret: "8Ay8eJ8A9T2bSiXkIfiLolgCWFE",
+});
+
 
 // User Routes ------------------------------------------------------------------
 app.use("/api/users", userRoutes);
@@ -52,3 +69,9 @@ app.use("/api/addresses", addressRoutes);
 
 // Cart Routes -------------------------------------------------------------------
 app.use("/api/cart", cartRoutes);
+
+// blog routes -------------------------------------------------------------------
+app.use("/api/blogs", blogRoutes);
+
+// Image Upload Route -------------------------------------------------------------
+
